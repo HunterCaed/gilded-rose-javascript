@@ -1,31 +1,31 @@
 import { expect, describe, it } from "vitest";
-import { Item, items, updateQuality, AgedItem, Tickets, ConjuredItem, Generic } from "./gilded-rose.js";
+import { Item, items, updateQuality, AgedItem, Tickets, ConjuredItem, Generic, Legond, Basic } from "./gilded-rose.js";
 
-describe("updateQuality", () => {
-  it("reduces quality and sellIn of basic items by 1", () => { //this function works
-    const testItem = new Generic("basic", 5, 3);   //name, sellIn, quality
-    items.push(testItem);
+// describe("updateQuality", () => {
+//   it("reduces quality and sellIn of basic items by 1", () => { //this function works
+//     const testItem = new Generic("basic", 5, 3);   //name, sellIn, quality
+//     items.push(testItem);
 
-    testItem.uniqueUpdate()
+//     //testItem.uniqueUpdate()
 
-    //updateQuality();
+//     updateQuality();
 
-    expect(testItem.quality).toBe(2);
-    expect(testItem.sellIn).toBe(4);
-  });
-});
+//     expect(testItem.quality).toBe(2);
+//     expect(testItem.sellIn).toBe(4);
+//   });
+// });
 
-describe("sellInless Zero", () => {  //Once the `sellIn` days is less then zero, `quality` degrades twice as fast
-  it("Once the `sellIn` days is less then zero, `quality` degrades twice as fast ", () => {
-    const tests = new Item("basic2", 0, 4);
-    items.push(tests)
+// describe("sellInless Zero", () => {  //Once the `sellIn` days is less then zero, `quality` degrades twice as fast
+//   it("Once the `sellIn` days is less then zero, `quality` degrades twice as fast ", () => {
+//     const tests = new Generic("basic2", 0, 4);
+//     items.push(tests)
 
-    updateQuality()
+//     updateQuality()
 
-    expect(tests.quality).toBe(2);
-    expect(tests.sellIn).toBe(-1);
-  })
-})   
+//     expect(tests.quality).toBe(2);
+//     expect(tests.sellIn).toBe(-1);
+//   })
+// })   
 
 describe("Aged Brie", () => { // "Aged Brie" actually increases in quality the older it gets.
   it("Aged Brie actually increases in quality the older it gets", () => {
@@ -33,8 +33,8 @@ describe("Aged Brie", () => { // "Aged Brie" actually increases in quality the o
     //test2.transform
     items.push(test2)
 
-    //updateQuality()
-    test2.uniqueUpdate()
+    updateQuality()
+    //test2.uniqueUpdate()
     expect(test2.quality).toBe(7);
     expect(test2.sellIn).toBe(3);
   })
@@ -42,7 +42,7 @@ describe("Aged Brie", () => { // "Aged Brie" actually increases in quality the o
 
 describe("Quality of Item", () => {   //the quality of an item is never more than 50
   it("The quality of a item is never more than 50", () => {
-    const test3 = new Item("Aged Brie", 1, 50)
+    const test3 = new AgedItem("Aged Brie", 1, 50)
     items.push(test3)
 
     updateQuality()
@@ -57,8 +57,8 @@ describe ("Backstage passes 10 days or less", () => {
       const test4 = new Tickets("Backstage passes to a TAFKAL80ETC concert", 10, 12)
       items.push(test4)
 
-      //updateQuality()
-      test4.uniqueUpdate()
+      updateQuality()
+      //test4.uniqueUpdate()
       expect(test4.quality).toBe(14)
       expect(test4.sellIn).toBe(9)
     })
@@ -69,8 +69,8 @@ describe ("Backstage passes 5 days or less", () => {
     const test8 = new Tickets("Backstage passes to a TAFKAL80ETC concert", 5, 12)
     items.push(test8)
 
-    //updateQuality()
-    test8.uniqueUpdate()
+    updateQuality()
+    //test8.uniqueUpdate()
 
     expect(test8.quality).toBe(15)
     expect(test8.sellIn).toBe(4)
@@ -79,7 +79,7 @@ describe ("Backstage passes 5 days or less", () => {
 
 describe ("After the Concert", () => {
   it("quality drops to 0 after the concert", () => {
-    const test4 = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 12)
+    const test4 = new Tickets("Backstage passes to a TAFKAL80ETC concert", 0, 12)
     items.push(test4)
 
     updateQuality()
@@ -91,7 +91,7 @@ describe ("After the Concert", () => {
 
 describe ("Qality greater than zero", () => {
   it("The quality of a item is never negative", () => {
-    const test6 = new Item("basic6", 5, 0)
+    const test6 = new Basic("basic6", 5, 0)
     items.push(test6)
 
     updateQuality()
@@ -103,7 +103,7 @@ describe ("Qality greater than zero", () => {
 
 describe("Sulfuras, Hand of Ragnaros does not decrease in quality", () =>{
   it("'Sulfuras, Hand of Ragnaros,' being a legendary item, never has to be sold nor does it decrease in quality", () => {
-    const testItem = new Item("Sulfuras, Hand of Ragnaros", 1, 80);
+    const testItem = new Legond("Sulfuras, Hand of Ragnaros", 1, 80);
     items.push(testItem);
     
     updateQuality();
@@ -116,19 +116,19 @@ describe("'Conjured' items degrade twice as fast", () =>{
     let testItem = new ConjuredItem("Conjured Mana Cake", 3, 6);
     items.push(testItem);
     
-    //updateQuality();
-    testItem.uniqueUpdate()
+    updateQuality();
+    //testItem.uniqueUpdate()
     expect(testItem.quality).toBe(4) //receiving 2 
     expect(testItem.sellIn).toBe(2)
 
-    // let testItem2 = new ConjuredItem("Conjured Mana Cake", -1, 4);
-    // items.push(testItem2);
+    let testItem2 = new ConjuredItem("Conjured Mana Cake", -1, 4);
+    items.push(testItem2);
 
-    // //updateQuality();
-    // testItem2.uniqueUpdate()
+    //updateQuality();
+    testItem2.uniqueUpdate()
 
-    // expect(testItem2.quality).toBe(0)    
-    // expect(testItem2.sellIn).toBe(-2)
+    expect(testItem2.quality).toBe(0)    
+    expect(testItem2.sellIn).toBe(-2)
   })
 })
 

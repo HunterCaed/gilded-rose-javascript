@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test": "vitest --watch=false --reporter=verbose"
+    "test": "vitest --watch=true --reporter=verbose"
   },
   "devDependencies": {
     "vitest": "^0.26.3"
